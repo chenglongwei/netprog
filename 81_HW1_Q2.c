@@ -13,7 +13,7 @@ int main() {
 
     if (pid > 0) {
         // child process
-        execve("sum", argv, envp);
+        execve("81_HW1_Q2_sum.o", argv, envp);
     }
 
     int i = 0;
