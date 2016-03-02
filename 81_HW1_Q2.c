@@ -9,7 +9,7 @@ int main() {
     }
 
     char *envp[] = {NULL};
-    char *argv[] = {"./sum"};
+    char *argv[] = {""};
 
     if (pid > 0) {
         // child process
