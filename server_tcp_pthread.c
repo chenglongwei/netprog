@@ -51,7 +51,6 @@ int main() {
         pthread_create(&pthid, NULL, server_service, &newsockfd);
     }
 
-    // parent always hold this sockfd, actually not closed
     close(sockfd);
     return 0;
 }

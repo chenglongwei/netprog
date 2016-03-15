@@ -69,7 +69,6 @@ int main() {
         }
     }
 
-    // parent always hold this sockfd, actually not closed
     close(sockfd);
     return 0;
 }
