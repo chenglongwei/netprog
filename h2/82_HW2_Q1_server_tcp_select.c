@@ -6,6 +6,7 @@
 
 #define PORT 6666
 #define BUF_SIZE 128
+#define END_CHAT "bye"
 
 void server_service(int sockfd);
 void error_msg(const char *msg) {
@@ -73,15 +74,25 @@ int main() {
     return 0;
 }
 
-void server_service(int sock) {
+void server_service(int newsockfd) {
     char buffer[BUF_SIZE];
-    memset(buffer, '\0', sizeof(char) * BUF_SIZE);
-    
-    if (read(sock, buffer, BUF_SIZE) < 0) {
-        error_msg("read");
-    }
+    for(;;) {
+        memset(buffer, '\0', sizeof(char) * BUF_SIZE);
 
-    if (write(sock, buffer, strlen(buffer)) < 0) {
-        error_msg("write");
-    }
+        if (read(newsockfd, buffer, sizeof(char) * BUF_SIZE) < 0) {
+            error_msg("read from socket");
+        }
+
+        printf("Client: %s\n", buffer);
+        if (strcmp(buffer, END_CHAT) == 0) {
+            close(newsockfd);
+            return;
+        }
+
+        printf("Say something to client: \nServer: ");
+        scanf("%s", buffer);
+        if (write(newsockfd, buffer, strlen(buffer)) < 0) {
+            error_msg("write to socket");
+        }
+    }    
 }
